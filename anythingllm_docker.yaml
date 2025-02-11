@@ -1,0 +1,42 @@
+version: "3.9"  # Updated version
+
+services:
+  anythingllm:
+    image: mintplexlabs/anythingllm:latest # Added :latest tag
+    container_name: anythingllm
+    ports:
+      - "3001:3001"
+    cap_add:
+      - SYS_ADMIN # Consider if this is still needed
+    environment:
+      STORAGE_DIR: /app/server/storage  # Correct path inside container
+      JWT_SECRET: "make this a large list of random numbers and letters 20+" # Important!
+      LLM_PROVIDER: ollama
+      OLLAMA_BASE_PATH: http://192.168.1.10:7869 # Use service name
+      OLLAMA_MODEL_PREF: deepseek-r1:14b # Or your preferred model
+      OLLAMA_MODEL_TOKEN_LIMIT: 4096
+      EMBEDDING_ENGINE: ollama
+      EMBEDDING_BASE_PATH: http://192.168.1.10:7869 # Use service name
+      EMBEDDING_MODEL_PREF: nomic-embed-text:latest # Or your preferred model
+      EMBEDDING_MODEL_MAX_CHUNK_LENGTH: 8192
+      VECTOR_DB: lancedb
+      WHISPER_PROVIDER: local
+      TTS_PROVIDER: native
+      PASSWORDMINCHAR: 8
+      # ... other environment variables
+    volumes:
+      - /storage/anythingllm:/app/server/storage  # Mount your storage location
+      - /storage/ollama-docker/ollama/ollama/models:/app/models # Mount Ollama models
+  #  depends_on:
+  #    - ollama
+    restart: unless-stopped  # More robust restart policy
+
+  #ollama:
+  #  image: ollama/ollama:latest
+  #  #container_name: ollama
+  #  ports:
+  #    - "11434:11434"  # Optional: Expose Ollama API
+  #  volumes:
+  #    - /storage/ollama/models:/models
+  #  restart: unless-stopped
+
