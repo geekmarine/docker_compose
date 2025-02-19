@@ -1,0 +1,19 @@
+version: "3.9"  # Or your preferred Docker Compose version
+
+services:
+  talos-master:
+    image: talos.dev/talos:${TALOS_VERSION:-latest} # Use a specific version for production
+    container_name: talos-master
+    ports:
+      - "6443:6443" # Kubernetes API server port (Talos control plane)
+      - "8080:8080"  # Optional: For Talos web UI (if enabled)
+    volumes:
+      - talos-config:/etc/talos # Mount configuration directory
+    environment:
+      - TALOS_VERSION=${TALOS_VERSION:-latest} # Pass version to container (optional)
+    restart: always # Or "unless-stopped" for more control
+    # Add any other necessary configurations like network_mode, depends_on, etc.
+
+
+volumes:
+  talos-config: # Named volume for persistent storage of Talos configuration
