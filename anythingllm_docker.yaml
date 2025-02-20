@@ -13,7 +13,7 @@ services:
       JWT_SECRET: "make this a large list of random numbers and letters 20+" # Important!
       LLM_PROVIDER: ollama
       OLLAMA_BASE_PATH: http://192.168.1.10:7869 # Use service name
-      OLLAMA_MODEL_PREF: deepseek-r1:14b # Or your preferred model
+      OLLAMA_MODEL_PREF: deepseek-r1:8b # Or your preferred model
       OLLAMA_MODEL_TOKEN_LIMIT: 4096
       EMBEDDING_ENGINE: ollama
       EMBEDDING_BASE_PATH: http://192.168.1.10:7869 # Use service name
@@ -39,4 +39,3 @@ services:
   #  volumes:
   #    - /storage/ollama/models:/models
   #  restart: unless-stopped
-
